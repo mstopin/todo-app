@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index",
-    "dev:build": "tsc -w",
+    "dev:build": "tsc -w --preserveWatchOutput",
     "dev:start": "nodemon dist/index",
     "dev": "concurrently --raw -k \"yarn dev:build\" \"yarn dev:start\"",
     "lint": "eslint ."
