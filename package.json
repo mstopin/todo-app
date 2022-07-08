@@ -1,0 +1,8 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "repository": "https://github.com/mstopin/todo-app.git",
+  "author": "mstopin <46541569+mstopin@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true
+}
