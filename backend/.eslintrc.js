@@ -14,4 +14,7 @@ module.exports = {
   ignorePatterns: [
     "dist/**",
   ],
+  "rules": {
+    "semi": [2, "always"],
+  },
 };
