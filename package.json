@@ -4,5 +4,8 @@
   "repository": "https://github.com/mstopin/todo-app.git",
   "author": "mstopin <46541569+mstopin@users.noreply.github.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "./backend"
+  ]
 }

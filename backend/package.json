@@ -1,0 +1,27 @@
+{
+  "name": "@todo-app/backend",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index",
+    "dev:build": "tsc -w",
+    "dev:start": "nodemon dist/index",
+    "dev": "concurrently --raw -k \"yarn dev:build\" \"yarn dev:start\""
+  },
+  "dependencies": {
+    "@fastify/type-provider-typebox": "^2.1.0",
+    "@sinclair/typebox": "^0.24.12",
+    "dotenv": "^16.0.1",
+    "fastify": "^4.2.0",
+    "mongodb": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.3",
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.7.4"
+  }
+}
