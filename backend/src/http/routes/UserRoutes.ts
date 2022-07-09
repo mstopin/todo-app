@@ -9,6 +9,12 @@ const UserRoutes: FastifyPluginAsync = async (fastify) => {
       body: UserSchema.registerUser,
     },
   }, UserController.registerUser);
+
+  fastify.post('/login', {
+    schema: {
+      body: UserSchema.loginUser,
+    },
+  }, UserController.loginUser);
 };
 
 export default UserRoutes;
