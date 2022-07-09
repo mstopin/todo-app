@@ -57,9 +57,7 @@ const UserService = {
     }
 
     const token = jwt.sign({
-      user: {
-        id: exactEmailUser._id.toString(),
-      },
+      id: exactEmailUser._id.toString(),
     }, Config.get('JWT_SECRET'), {
       expiresIn: '30m',
     });
