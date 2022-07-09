@@ -1,14 +1,14 @@
 import { FastifyPluginAsync } from 'fastify';
 
-import { registerUserSchema } from '../schemas/UserSchema';
-import { registerUserHandler } from '../controllers/UserController';
+import UserSchema from '../schemas/UserSchema';
+import UserController from '../controllers/UserController';
 
 const UserRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.post('/', {
     schema: {
-      body: registerUserSchema,
+      body: UserSchema.registerUser,
     },
-  }, registerUserHandler);
+  }, UserController.registerUser);
 };
 
 export default UserRoutes;

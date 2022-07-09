@@ -4,11 +4,15 @@ import { RegisterUserPayloadType } from '../schemas/UserSchema';
 
 type RegisterUserRequest = FastifyRequest<{ Body: RegisterUserPayloadType }>;
 
-export const registerUserHandler = async (request: RegisterUserRequest, reply: FastifyReply) => {
-  const { email, password } = request.body;
+const UserController = {
+  registerUser: async (request: RegisterUserRequest, reply: FastifyReply) => {
+    const { email, password } = request.body;
 
-  await reply.send({
-    email,
-    password,
-  });
+    await reply.send({
+      email,
+      password,
+    });
+  },
 };
+
+export default UserController;
