@@ -16,5 +16,6 @@ module.exports = {
   ],
   "rules": {
     "semi": [2, "always"],
+    "@typescript-eslint/no-explicit-any": "off"
   },
 };
