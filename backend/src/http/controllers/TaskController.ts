@@ -1,13 +1,22 @@
 import { ObjectId } from 'mongodb';
 import { FastifyRequest, FastifyReply } from 'fastify';
 
-import { GetTaskPayloadType, CreateTaskPayloadType } from '../schemas/TaskSchema';
+import {
+  GetTaskParamsPayloadType,
+  CreateTaskBodyPayloadType,
+  UpdateTaskParamsPayloadType,
+  UpdateTaskBodyPayloadType,
+} from '../schemas/TaskSchema';
 
 import TaskService from '../services/TaskService';
 
 type GetTasksRequest = FastifyRequest;
-type GetTaskRequest = FastifyRequest<{ Params: GetTaskPayloadType }>;
-type CreateTaskRequest = FastifyRequest<{ Body: CreateTaskPayloadType }>;
+type GetTaskRequest = FastifyRequest<{ Params: GetTaskParamsPayloadType }>;
+type CreateTaskRequest = FastifyRequest<{ Body: CreateTaskBodyPayloadType }>;
+type UpdateTaskRequest = FastifyRequest<{
+  Params: UpdateTaskParamsPayloadType,
+  Body: UpdateTaskBodyPayloadType,
+}>;
 
 const TaskController = {
   getTasks: async (request: GetTasksRequest, reply: FastifyReply) => {
@@ -36,6 +45,17 @@ const TaskController = {
     try {
       const task = await TaskService.createTask(userId, request.body);
       await reply.status(201).send({ task });
+    } catch (e: any) {
+      await reply.status(400).send({ error: e.message });
+    }
+  },
+
+  updateTask: async (request: UpdateTaskRequest, reply: FastifyReply) => {
+    const userId = new ObjectId(request.user.id);
+    const taskId = new ObjectId(request.params.taskId);
+    try {
+      const task = await TaskService.updateTask(userId, taskId, request.body);
+      await reply.status(200).send({ task });
     } catch (e: any) {
       await reply.status(400).send({ error: e.message });
     }

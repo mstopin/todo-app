@@ -1,11 +1,17 @@
 import { ObjectId } from 'mongodb';
 
 import UserModel from '../../models/UserModel';
-import TaskModel from '../../models/TaskModel';
+import TaskModel, { TaskStatus } from '../../models/TaskModel';
 
 interface CreateTaskDTO {
   content: string;
   description?: string;
+}
+
+interface UpdateTaskDTO {
+  content?: string;
+  description?: string;
+  status?: TaskStatus;
 }
 
 const TaskService = {
@@ -59,7 +65,38 @@ const TaskService = {
       description: description ?? null,
       status: 'NEW',
     };
-  }
+  },
+
+  updateTask: async (userId: ObjectId, taskId: ObjectId, updateTaskDTO: UpdateTaskDTO) => {
+    const user = await UserModel.findOne({ _id: userId });
+    if (!user) {
+      throw new Error('User does not exist');
+    }
+
+    const task = await TaskModel.findOne({
+      ownerId: userId,
+      _id: taskId,
+    });
+    if (!task) {
+      throw new Error('Task does not exist');
+    }
+
+    const { content, description, status } = updateTaskDTO;
+    await TaskModel.updateOne({ _id: taskId }, {
+      $set: {
+        content: content ?? task.content,
+        description: description ?? task.description,
+        status: status ?? task.status,
+      },
+    });
+
+    return {
+      ...task,
+      content: content ?? task.content,
+      description: description ?? task.description,
+      status: status ?? task.status,
+    };
+  },
 };
 
 export default TaskService;
