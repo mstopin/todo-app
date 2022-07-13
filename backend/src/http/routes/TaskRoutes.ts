@@ -7,6 +7,7 @@ import {
   CreateTaskBodyPayloadType,
   UpdateTaskParamsPayloadType,
   UpdateTaskBodyPayloadType,
+  DeleteTaskParamsPayloadType,
 } from '../schemas/TaskSchema';
 import TaskController from '../controllers/TaskController';
 
@@ -49,6 +50,15 @@ const TaskRoutes: FastifyPluginAsync = async (fastify) => {
       }>(),
     ],
   }, TaskController.updateTask);
+
+  fastify.withTypeProvider<TypeBoxTypeProvider>().delete('/:taskId', {
+    schema: {
+      params: TaskParamsSchema.deleteTask,
+    },
+    onRequest: [
+      fastify.requireJWT<{ Params: DeleteTaskParamsPayloadType }>(),
+    ],
+  }, TaskController.deleteTask);
 };
 
 export default TaskRoutes;

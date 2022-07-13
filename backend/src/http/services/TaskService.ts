@@ -97,6 +97,23 @@ const TaskService = {
       status: status ?? task.status,
     };
   },
+
+  deleteTask: async (userId: ObjectId, taskId: ObjectId) => {
+    const user = await UserModel.findOne({ _id: userId });
+    if (!user) {
+      throw new Error('User does not exist');
+    }
+
+    const task = await TaskModel.findOne({
+      ownerId: userId,
+      _id: taskId,
+    });
+    if (!task) {
+      throw new Error('Task does not exist');
+    }
+
+    await TaskModel.deleteOne({ _id: taskId });
+  }
 };
 
 export default TaskService;

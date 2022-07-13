@@ -8,6 +8,10 @@ const TaskParamsSchema = {
   updateTask: Type.Object({
     taskId: Type.String(),
   }),
+
+  deleteTask: Type.Object({
+    taskId: Type.String(),
+  }),
 };
 
 const TaskBodySchema = {
@@ -33,5 +37,7 @@ export type CreateTaskBodyPayloadType = Static<typeof TaskBodySchema['createTask
 
 export type UpdateTaskParamsPayloadType = Static<typeof TaskParamsSchema['updateTask']>;
 export type UpdateTaskBodyPayloadType = Static<typeof TaskBodySchema['updateTask']>;
+
+export type DeleteTaskParamsPayloadType = Static<typeof TaskParamsSchema['deleteTask']>;
 
 export { TaskParamsSchema, TaskBodySchema };
