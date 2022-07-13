@@ -1,12 +1,30 @@
-import { FastifyPluginAsync, onRequestAsyncHookHandler, FastifyRequest, FastifyReply } from 'fastify';
+import {
+  FastifyPluginAsync,
+  onRequestAsyncHookHandler,
+  FastifyRequest,
+  FastifyReply,
+  RawServerDefault,
+  RawRequestDefaultExpression,
+  RawReplyDefaultExpression,
+  RequestGenericInterface,
+  FastifySchema,
+} from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import fastifyJWT from '@fastify/jwt';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 
 import Config from '../config';
-
 declare module "fastify" {
   interface FastifyInstance {
-    requireJWT: onRequestAsyncHookHandler;
+    requireJWT<RequestInterface extends RequestGenericInterface>(): onRequestAsyncHookHandler<
+      RawServerDefault,
+      RawRequestDefaultExpression,
+      RawReplyDefaultExpression,
+      RequestInterface,
+      unknown,
+      FastifySchema,
+      TypeBoxTypeProvider
+    >;
   }
 }
 
@@ -23,7 +41,7 @@ const requireJWT: FastifyPluginAsync = async (fastify) => {
     secret: Config.get('JWT_SECRET'),
   });
 
-  fastify.decorate('requireJWT', async (request: FastifyRequest, reply: FastifyReply) => {
+  fastify.decorate('requireJWT', () => async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       await request.jwtVerify();
     } catch {

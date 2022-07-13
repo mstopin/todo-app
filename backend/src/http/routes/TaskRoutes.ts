@@ -1,25 +1,34 @@
 import { FastifyPluginAsync } from 'fastify';
 
-import TaskSchema from '../schemas/TaskSchema';
+import TaskSchema, {
+  GetTaskPayloadType,
+  CreateTaskPayloadType,
+} from '../schemas/TaskSchema';
 import TaskController from '../controllers/TaskController';
 
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+
 const TaskRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.get('/', {
-    onRequest: [fastify.requireJWT],
+  fastify.withTypeProvider<TypeBoxTypeProvider>().get('/', {
+    onRequest: [
+      fastify.requireJWT<{ Body: Record<string, never> }>()
+    ],
   }, TaskController.getTasks);
 
-  fastify.get('/:taskId', {
+  fastify.withTypeProvider<TypeBoxTypeProvider>().get('/:taskId', {
     schema: {
       params: TaskSchema.getTask,
     },
-    onRequest: [fastify.requireJWT as any /* workaround for types */]
+    onRequest: [
+      fastify.requireJWT<{ Params: GetTaskPayloadType }>()
+    ],
   }, TaskController.getTask);
 
-  fastify.post('/', {
+  fastify.withTypeProvider<TypeBoxTypeProvider>().post('/', {
     schema: {
       body: TaskSchema.createTask,
     },
-    onRequest: [fastify.requireJWT as any],
+    onRequest: [fastify.requireJWT<{ Body: CreateTaskPayloadType }>()],
   }, TaskController.createTask);
 };
 
