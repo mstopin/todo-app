@@ -10,6 +10,15 @@ services:
       - ./backend:/app
     env_file:
       - ./env/backend.dev.env
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - ./env/frontend.dev.env
   nginx:
     image: nginx:alpine
     ports:
