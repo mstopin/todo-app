@@ -14,16 +14,20 @@ import {
 export default function HeaderUserMenu() {
   return (
     <Box>
-      <Menu>
-        <MenuButton display="block" fontSize="xl" color="gray.600">
+      <Menu autoSelect={false}>
+        <MenuButton display="block" fontSize="2xl" color="text">
           <FaUser />
         </MenuButton>
         <MenuList>
           <MenuItem>
-            <Text>Login</Text>
+            <Text color="text">
+              Login
+            </Text>
           </MenuItem>
           <MenuItem>
-            <Text>Register</Text>
+            <Text color="text">
+              Register
+            </Text>
           </MenuItem>
         </MenuList>
       </Menu>

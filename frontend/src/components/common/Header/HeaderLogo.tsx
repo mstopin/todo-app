@@ -5,7 +5,7 @@ import {
 
 export default function HeaderLogo() {
   return (
-    <Heading fontSize="3xl" color="gray.600">
+    <Heading fontSize="3xl" color="text">
       To Do
     </Heading>
   );

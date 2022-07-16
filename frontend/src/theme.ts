@@ -4,9 +4,12 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: 'gray.50',
+        bg: '#F7FAFC',
       },
     },
+  },
+  colors: {
+    text: '#444545',
   },
 });
 
