@@ -39,6 +39,22 @@ const AngleDownIcon = chakra(FaAngleDown, {
   },
 });
 
+const ActionButton = chakra(Button, {
+  baseStyle: {
+    px: '4',
+    py: '2',
+    flexGrow: '1',
+    flexBasis: '0',
+    h: 'auto',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    bg: 'bg',
+    '&:active, &:hover': {
+      bg: 'bg',
+    },
+  },
+});
+
 export default function Task({ content, description, status }: TaskProps) {
   const [expanded, setExpanded] = useBoolean(false);
 
@@ -71,6 +87,23 @@ export default function Task({ content, description, status }: TaskProps) {
             {description ?? 'No description'}
           </Text>
         </Box>
+        <Flex align="center" mt={4} color="text">
+          <ActionButton mr={4} borderColor={getTaskColorClassName('NEW')} disabled={status === 'NEW'}>
+            <Text fontSize="xs">
+              New
+            </Text>
+          </ActionButton>
+          <ActionButton mr={4} borderColor={getTaskColorClassName('IN_PROGRESS')} disabled={status === 'IN_PROGRESS'}>
+            <Text fontSize="xs">
+              In progress
+            </Text>
+          </ActionButton>
+          <ActionButton borderColor={getTaskColorClassName('COMPLETED')} disabled={status === 'COMPLETED'}>
+            <Text fontSize="xs">
+              Completed
+            </Text>
+          </ActionButton>
+        </Flex>
       </Collapse>
     </Box>
   );
