@@ -10,7 +10,7 @@ import HeaderUserMenu from './HeaderUserMenu';
 
 export default function Header() {
   return (
-    <Box px={4} py={2}>
+    <Box px={3} py={3}>
       <Flex alignItems="center">
         <HeaderLogo />
         <Spacer />
