@@ -59,13 +59,13 @@ export default function Task({ content, description, status }: TaskProps) {
   const [expanded, setExpanded] = useBoolean(false);
 
   return (
-    <Box mb={4} py={1.5} px={3} borderRadius={8} bg="task.bg" boxShadow={getTaskColorClassName(status)}>
+    <Box py={[1.5, 3.5]} px={[3, 4]} borderRadius={8} bg="task.bg" boxShadow={getTaskColorClassName(status)}>
       <Flex>
         <Box>
-          <Text color="text" fontSize="lg">
+          <Text color="text" fontSize={["lg", null, null, "xl"]}>
             {content}
           </Text>
-          <Text color={getTaskColorClassName(status)} fontSize="xs" fontWeight="bold">
+          <Text color={getTaskColorClassName(status)} fontSize={["xs", null, null, "sm"]} fontWeight="bold">
             {getTaskStatusDescription(status)}
           </Text>
         </Box>
@@ -79,27 +79,27 @@ export default function Task({ content, description, status }: TaskProps) {
         </Flex>
       </Flex>
       <Collapse in={expanded}>
-        <Box mt={4}>
-          <Text fontSize="sm" color="text">
+        <Box mt={4} fontSize={["sm", null, null, "md"]}>
+          <Text color="text">
             Description:
           </Text>
-          <Text fontSize="sm" fontWeight="light" color="text">
+          <Text fontWeight="light" color="text">
             {description ?? 'No description'}
           </Text>
         </Box>
         <Flex align="center" mt={4} color="text">
           <ActionButton mr={4} borderColor={getTaskColorClassName('NEW')} disabled={status === 'NEW'}>
-            <Text fontSize="xs">
+            <Text fontSize={["xs", "sm", null, "md"]}>
               New
             </Text>
           </ActionButton>
           <ActionButton mr={4} borderColor={getTaskColorClassName('IN_PROGRESS')} disabled={status === 'IN_PROGRESS'}>
-            <Text fontSize="xs">
+            <Text fontSize={["xs", "sm", null, "md"]}>
               In progress
             </Text>
           </ActionButton>
           <ActionButton borderColor={getTaskColorClassName('COMPLETED')} disabled={status === 'COMPLETED'}>
-            <Text fontSize="xs">
+            <Text fontSize={["xs", "sm", null, "md"]}>
               Completed
             </Text>
           </ActionButton>

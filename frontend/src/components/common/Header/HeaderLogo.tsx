@@ -5,7 +5,7 @@ import {
 
 export default function HeaderLogo() {
   return (
-    <Heading fontFamily="poppins" fontSize="4xl" color="text">
+    <Heading fontFamily="poppins" fontSize={["4xl", null, null, "5xl"]} color="text">
       To Do
     </Heading>
   );

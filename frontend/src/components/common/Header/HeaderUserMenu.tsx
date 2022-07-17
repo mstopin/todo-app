@@ -15,7 +15,7 @@ export default function HeaderUserMenu() {
   return (
     <Box>
       <Menu autoSelect={false}>
-        <MenuButton display="block" fontSize="2xl" color="text">
+        <MenuButton display="block" fontSize={["2xl", null, "3xl"]} color="text">
           <FaUser />
         </MenuButton>
         <MenuList>
