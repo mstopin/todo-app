@@ -7,6 +7,7 @@ import {
 export enum Modal {
   USER_LOGIN,
   USER_REGISTER,
+  TASK_ADD,
 };
 
 interface ModalContextProps {
