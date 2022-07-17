@@ -29,7 +29,6 @@ const UserService = {
       const { insertedId: newUserId } = await UserModel.insertOne({
         email,
         password: hashedPassword,
-        tasks: [],
       });
 
       return {
