@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 
 import {
   TaskParamsSchema,
@@ -10,8 +11,6 @@ import {
   DeleteTaskParamsPayloadType,
 } from '../schemas/TaskSchema';
 import TaskController from '../controllers/TaskController';
-
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 
 const TaskRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.withTypeProvider<TypeBoxTypeProvider>().get('/', {

@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -61,6 +62,14 @@ const UserService = {
       expiresIn: '30m',
     });
     return token;
+  },
+
+  getUser: async (userId: ObjectId) => {
+    const user = await UserModel.findOne({ _id: userId });
+    if (!user) {
+      throw new Error('User does not exist');
+    }
+    return user;
   },
 };
 
