@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   Text,
@@ -11,7 +11,11 @@ import {
   FaUser,
 } from 'react-icons/fa';
 
+import ModalContext, { Modal } from '../../../modals/ModalContext';
+
 export default function HeaderUserMenu() {
+  const { showModal } = useContext(ModalContext);
+
   return (
     <Box>
       <Menu autoSelect={false}>
@@ -19,12 +23,12 @@ export default function HeaderUserMenu() {
           <FaUser />
         </MenuButton>
         <MenuList>
-          <MenuItem>
+          <MenuItem onClick={() => showModal(Modal.USER_LOGIN)}>
             <Text color="text">
               Login
             </Text>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => showModal(Modal.USER_REGISTER)}>
             <Text color="text">
               Register
             </Text>
