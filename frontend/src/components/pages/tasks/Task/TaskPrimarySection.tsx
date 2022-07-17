@@ -5,7 +5,6 @@ import {
   Flex,
   Spacer,
   Text,
-  Button,
 } from '@chakra-ui/react';
 import {
   FaAngleDown,
@@ -21,10 +20,17 @@ const getTaskStatusDescription = (taskStatus: TaskStatus) => {
   return taskStatus.toUpperCase();
 }
 
-const AngleDownIcon = chakra(FaAngleDown, {
+const ExpandButton = chakra('button', {
   baseStyle: {
-    margin: 'auto',
+    display: 'block',
+    w: '32px',
+  }
+})
+
+const ExpandIcon = chakra(FaAngleDown, {
+  baseStyle: {
     fontSize: '3xl',
+    color: 'text',
   },
 });
 
@@ -55,13 +61,11 @@ export default function TaskPrimarySection(props: TaskPrimarySectionProps) {
       </Box>
       <Spacer />
       {expandable && (
-        <Flex align="center" justify="end">
-          <Button display="block"  bg="none" p={0} _active={{ bg: 'none' }} _hover={{ bg: 'none' }} onClick={toggleExpanded}>
-            <Text transition="ease-in-out 0.2s" transform={isExpanded ? 'rotate(-180deg)' : ''}>
-              <AngleDownIcon />
-            </Text>
-          </Button>
-        </Flex>
+        <ExpandButton onClick={toggleExpanded}>
+          <Text transition="ease-in-out 0.2s" transform={isExpanded ? 'rotate(-180deg)' : ''}>
+            <ExpandIcon />
+          </Text>
+        </ExpandButton>
       )}
     </Flex>
   );

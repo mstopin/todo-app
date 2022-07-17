@@ -7,7 +7,7 @@ import {
 
 import Header from '../components/common/Header';
 
-import Task from '../components/pages/tasks/Task';
+import Task, { CreateTaskButton } from '../components/pages/tasks/Task';
 
 export default function Index() {
   return (
@@ -22,6 +22,7 @@ export default function Index() {
             <Task content="Do the dishes" status='NEW' />
             <Task content="Do the dishes" status='IN_PROGRESS' />
             <Task content="Do the dishes" status='COMPLETED' />
+            <CreateTaskButton />
           </SimpleGrid>
         </Box>
       </Box>

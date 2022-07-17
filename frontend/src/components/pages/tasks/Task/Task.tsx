@@ -5,6 +5,7 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 
+import TaskBase from './TaskBase'
 import TaskPrimarySection from './TaskPrimarySection';
 import TaskSecondarySection from './TaskSecondarySection';
 
@@ -24,7 +25,7 @@ export default function Task({ content, description, status }: TaskProps) {
   }, [mustBeExpanded]);
 
   return (
-    <Box py={[1.5, 3.5]} px={[3, 4]} borderRadius={8} bg="task.bg" boxShadow={getTaskColorClassName(status)}>
+    <TaskBase boxShadow={getTaskColorClassName(status)}>
       <TaskPrimarySection
         content={content}
         status={status}
@@ -38,6 +39,6 @@ export default function Task({ content, description, status }: TaskProps) {
           status={status}
         />
       </Collapse>
-    </Box>
+    </TaskBase>
   );
 }
