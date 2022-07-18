@@ -9,31 +9,44 @@ import {
   ModalFooter,
 } from '@chakra-ui/react';
 
-import ModalContext from './ModalContext';
-
-interface BaseModalProps {
+interface BaseModalHeaderProps {
   title: string;
-  renderBody: () => React.ReactElement;
-  renderFooter: (hideModal: () => void) => React.ReactElement;
 }
 
-export default function BaseModal({ title, renderBody, renderFooter }: BaseModalProps) {
-  const { modal, hideModal } = useContext(ModalContext);
-  
+interface BaseModalProps {
+  onClose: () => void;
+}
+
+export function BaseModalHeader({ title }: BaseModalHeaderProps) {
   return (
-    <Modal isOpen={modal !== null} onClose={hideModal} isCentered>
+    <ModalHeader color="text">
+      {title}
+    </ModalHeader>
+  )
+}
+
+export function BaseModalBody({ children }: PropsWithChildren) {
+  return (
+    <ModalBody>
+      {children}
+    </ModalBody>
+  );
+}
+
+export function BaseModalFooter({ children }: PropsWithChildren) {
+  return (
+    <ModalFooter display="block">
+      {children}
+    </ModalFooter>
+  );
+}
+
+export default function BaseModal({ onClose, children }: PropsWithChildren<BaseModalProps>) {  
+  return (
+    <Modal onClose={onClose} isOpen isCentered>
       <ModalOverlay />
       <ModalContent mx={4}>
-        <ModalHeader color="text">
-          {title}
-        </ModalHeader>
-        <ModalBody>
-          {renderBody()}
-        </ModalBody>
-        <ModalFooter display="block">
-          {renderFooter(hideModal)}
-        </ModalFooter>
-        <ModalCloseButton />
+        {children}
       </ModalContent>
     </Modal>
   );

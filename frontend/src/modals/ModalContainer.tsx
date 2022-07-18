@@ -7,15 +7,17 @@ import UserRegisterModal from './user/UserRegisterModal';
 
 import TaskAddModal from './task/TaskAddModal';
 
-const getModalComponentFromKey: (modalKey: Modal | null) => React.ReactElement | null = (modalKey) => {
-  if (modalKey === Modal.USER_LOGIN) return (<UserLoginModal />);
-  if (modalKey === Modal.USER_REGISTER) return (<UserRegisterModal />);
-  if (modalKey === Modal.TASK_ADD) return (<TaskAddModal />)
-  return null;
-}
-
 export default function ModalContainer() {
-  const { modal } = useContext(ModalContext);
+  const { modal, hideModal } = useContext(ModalContext);
 
-  return getModalComponentFromKey(modal);
+  switch(modal) {
+    case Modal.USER_LOGIN:
+      return (<UserLoginModal onClose={hideModal} />);
+    case Modal.USER_REGISTER:
+      return (<UserRegisterModal onClose={hideModal} />);
+    case Modal.TASK_ADD:
+      return (<TaskAddModal onClose={hideModal} />);
+  }
+
+  return null;
 }

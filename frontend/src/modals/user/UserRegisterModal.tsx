@@ -8,13 +8,17 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-import BaseModal from '../BaseModal';
+import BaseModal, { BaseModalHeader, BaseModalBody, BaseModalFooter } from '../BaseModal';
 
-export default function UserRegisterModal() {
+interface UserRegisterModalProps {
+  onClose: () => void;
+}
+
+export default function UserRegisterModal({ onClose }: UserRegisterModalProps) {
   return (
-    <BaseModal
-      title="Register"
-      renderBody={() => (
+    <BaseModal onClose={onClose}>
+      <BaseModalHeader title="Register" />
+      <BaseModalBody>
         <FormControl>
           <Box mb={4}>
             <FormLabel htmlFor="email">Email:</FormLabel>
@@ -38,17 +42,17 @@ export default function UserRegisterModal() {
             />
           </Box>
         </FormControl>
-      )}
-      renderFooter={(hideModal) => (
+      </BaseModalBody>
+      <BaseModalFooter>
         <Flex justify="end">
-          <Button flex="0 1 100px" mr={4} onClick={hideModal}>
+          <Button flex="0 1 100px" mr={4} onClick={onClose}>
             Cancel
           </Button>
           <Button flex="0 1 100px" bg="task.bg">
             Register
           </Button>
         </Flex>
-      )}
-    />
+      </BaseModalFooter>
+    </BaseModal>
   );
 }

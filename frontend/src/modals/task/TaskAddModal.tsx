@@ -8,13 +8,17 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-import BaseModal from '../BaseModal';
+import BaseModal, { BaseModalHeader, BaseModalBody, BaseModalFooter } from '../BaseModal';
 
-export default function TaskAddModal() {
+interface TaskAddModalProps {
+  onClose: () => void;
+}
+
+export default function TaskAddModal({ onClose }: TaskAddModalProps) {
   return (
-    <BaseModal
-      title="Add new task"
-      renderBody={() => (
+    <BaseModal onClose={onClose}>
+      <BaseModalHeader title="Add new task" />
+      <BaseModalBody>
         <FormControl>
           <Box mb={4}>
             <FormLabel htmlFor="name">Task name:</FormLabel>
@@ -31,17 +35,17 @@ export default function TaskAddModal() {
             />
           </Box>
         </FormControl>
-      )}
-      renderFooter={(hideModal) => (
+      </BaseModalBody>
+      <BaseModalFooter>
         <Flex justify="end">
-          <Button flex="0 1 100px" mr={4} onClick={hideModal}>
+          <Button flex="0 1 100px" mr={4} onClick={onClose}>
             Cancel
           </Button>
           <Button flex="0 1 100px" bg="task.bg">
             Add task
           </Button>
         </Flex>
-      )}
-    />
+      </BaseModalFooter>
+    </BaseModal>
   );
 }
