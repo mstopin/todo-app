@@ -2,6 +2,8 @@ import {
   createContext,
   PropsWithChildren,
   useState,
+  useCallback,
+  useMemo,
 } from 'react';
 
 export enum Modal {
@@ -26,12 +28,18 @@ const Provider = ModalContext.Provider;
 
 export function ModalContextProvider({ children }: PropsWithChildren) {
   const [modal, setModal] = useState<Modal | null>(null);
+
+  const showModal = useCallback((modal: Modal) => setModal(modal), []);
+  const hideModal = useCallback(() => setModal(null), []);
+
+  const providerValue = useMemo(() => ({
+    modal,
+    showModal,
+    hideModal,
+  }), [modal, showModal, hideModal]);
+
   return (
-    <Provider value={{
-      modal,
-      showModal: (modal: Modal) => setModal(modal),
-      hideModal: () => setModal(null),
-    }}>
+    <Provider value={providerValue}>
       {children}
     </Provider>
   );
