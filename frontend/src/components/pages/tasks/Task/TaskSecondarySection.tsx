@@ -9,6 +9,8 @@ import {
 import { getTaskColorClassName } from './utils';
 import Task from '../../../../types/Task';
 
+import useTasks from '../../../../hooks/useTasks';
+
 const StatusChangeButton = chakra('button', {
   baseStyle: {
     p: 2,
@@ -36,9 +38,11 @@ const StatusText = chakra(Text, {
   },
 });
 
-type TaskSecondarySectionProps = Omit<Task, '_id' | 'content'>;
+type TaskSecondarySectionProps = Omit<Task, 'content'>;
 
-export default function TaskSecondarySection({ description, status }: TaskSecondarySectionProps) {
+export default function TaskSecondarySection({ _id, description, status }: TaskSecondarySectionProps) {
+  const { updateTask } = useTasks();
+
   return (
     <Box>
       <Box mt={4} fontSize={["sm", null, null, "md"]}>
@@ -50,17 +54,29 @@ export default function TaskSecondarySection({ description, status }: TaskSecond
         </Text>
       </Box>
       <SimpleGrid mt={4} columns={3} spacing={4} color="text">
-        <StatusChangeButton borderColor={getTaskColorClassName('NEW')} disabled={status === 'NEW'}>
+        <StatusChangeButton
+          borderColor={getTaskColorClassName('NEW')}
+          disabled={status === 'NEW'}
+          onClick={() => updateTask({ _id, status: 'NEW' })}
+        >
           <StatusText>
             New
           </StatusText>
         </StatusChangeButton>
-        <StatusChangeButton borderColor={getTaskColorClassName('IN_PROGRESS')} disabled={status === 'IN_PROGRESS'}>
+        <StatusChangeButton
+          borderColor={getTaskColorClassName('IN_PROGRESS')}
+          disabled={status === 'IN_PROGRESS'}
+          onClick={() => updateTask({ _id, status: 'IN_PROGRESS' })}
+        >
           <StatusText>
             In progress
           </StatusText>
         </StatusChangeButton>
-        <StatusChangeButton borderColor={getTaskColorClassName('COMPLETED')} disabled={status === 'COMPLETED'}>
+        <StatusChangeButton
+          borderColor={getTaskColorClassName('COMPLETED')}
+          disabled={status === 'COMPLETED'}
+          onClick={() => updateTask({ _id, status: 'COMPLETED' })}
+        >
           <StatusText>
             Completed
           </StatusText>

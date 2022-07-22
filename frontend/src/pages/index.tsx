@@ -23,7 +23,13 @@ export default function Index() {
         <Box mt={4} maxW={["480px", "none"]}>
           <SimpleGrid columns={[1, null, 2]} spacing={4}>
             {tasks && tasks.map((task) => (
-              <Task content={task.content} description={task.description} status={task.status} key={task._id} />
+              <Task
+                _id={task._id}
+                content={task.content}
+                description={task.description}
+                status={task.status}
+                key={task._id}
+              />
             ))}
             <CreateTaskButton />
           </SimpleGrid>

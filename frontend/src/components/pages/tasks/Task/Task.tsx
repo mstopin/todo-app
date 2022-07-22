@@ -12,9 +12,9 @@ import TaskSecondarySection from './TaskSecondarySection';
 import { getTaskColorClassName } from './utils';
 import TaskType from '../../../../types/Task';
 
-type TaskProps = Omit<TaskType, '_id'>;
+type TaskProps = TaskType;
 
-export default function Task({ content, description, status }: TaskProps) {
+export default function Task({ _id, content, description, status }: TaskProps) {
   const [expanded, setExpanded] = useState(false);
   const [mustBeExpanded] = useMediaQuery('(min-width: 48em)');
 
@@ -35,6 +35,7 @@ export default function Task({ content, description, status }: TaskProps) {
       />
       <Collapse in={mustBeExpanded || expanded}>
         <TaskSecondarySection
+          _id={_id}
           description={description}
           status={status}
         />

@@ -29,3 +29,36 @@ export async function createTask(createTaskProps: CreateTaskRequestProps, token:
   });
   return response.data;
 }
+
+type UpdateTaskRequestProps = Partial<Task> & Pick<Task, '_id'>;
+
+interface UpdateTaskResponse {
+  task: Task;
+}
+
+export async function updateTask(updateTaskProps: UpdateTaskRequestProps, token: string) {
+  const {
+    _id,
+    content,
+    description,
+    status,
+  } = updateTaskProps;
+
+  const data: any = {};
+  if (content) {
+    data.content = content;
+  }
+  if (description) {
+    data.description = description;
+  }
+  if (status) {
+    data.status = status;
+  }
+
+  const response = await axios.put<UpdateTaskResponse>(`/api/tasks/${_id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
