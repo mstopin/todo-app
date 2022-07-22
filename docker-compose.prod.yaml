@@ -5,24 +5,24 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile
-      target: dev
-    volumes:
-      - ./backend:/app
+      target: prod
     env_file:
-      - ./env/backend.dev.env
+      - ./env/backend.prod.env
     depends_on:
       - database
+    restart: unless-stopped
   frontend:
     build:
       context: frontend
       dockerfile: Dockerfile
-      target: dev
+      target: prod
     volumes:
-      - ./frontend:/app
+      - frontend:/app/.next
     env_file:
-      - ./env/frontend.dev.env
+      - ./env/frontend.prod.env
     depends_on:
       - database
+    restart: unless-stopped
   nginx:
     image: nginx:alpine
     ports:
@@ -32,12 +32,15 @@ services:
     depends_on:
       - frontend
       - backend
+    restart: unless-stopped
   database:
     image: mongo:latest
     volumes:
-      - database_dev:/data/db
+      - database_prod:/data/db
     env_file:
-      - ./env/database.dev.env
+      - ./env/database.prod.env
+    restart: unless-stopped
 
 volumes:
-  database_dev:
+  frontend:
+  database_prod:
