@@ -10,9 +10,9 @@ import TaskPrimarySection from './TaskPrimarySection';
 import TaskSecondarySection from './TaskSecondarySection';
 
 import { getTaskColorClassName } from './utils';
-import ITask from '../../../../types/Task';
+import TaskType from '../../../../types/Task';
 
-type TaskProps = ITask;
+type TaskProps = Omit<TaskType, '_id'>;
 
 export default function Task({ content, description, status }: TaskProps) {
   const [expanded, setExpanded] = useState(false);

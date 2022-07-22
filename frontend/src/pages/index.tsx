@@ -6,10 +6,13 @@ import {
 } from '@chakra-ui/react';
 
 import Header from '../components/common/Header';
-
 import Task, { CreateTaskButton } from '../components/pages/tasks/Task';
 
+import useTasks from '../hooks/useTasks';
+
 export default function Index() {
+  const { tasks } = useTasks();
+
   return (
     <Box maxW="992px" mx="auto">
       <Header />
@@ -19,9 +22,9 @@ export default function Index() {
         </Text>
         <Box mt={4} maxW={["480px", "none"]}>
           <SimpleGrid columns={[1, null, 2]} spacing={4}>
-            <Task content="Do the dishes" status='NEW' />
-            <Task content="Do the dishes" status='IN_PROGRESS' />
-            <Task content="Do the dishes" status='COMPLETED' />
+            {tasks && tasks.map((task) => (
+              <Task content={task.content} description={task.description} status={task.status} key={task._id} />
+            ))}
             <CreateTaskButton />
           </SimpleGrid>
         </Box>

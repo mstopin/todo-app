@@ -36,7 +36,7 @@ const StatusText = chakra(Text, {
   },
 });
 
-type TaskSecondarySectionProps = Omit<Task, 'content'>;
+type TaskSecondarySectionProps = Omit<Task, '_id' | 'content'>;
 
 export default function TaskSecondarySection({ description, status }: TaskSecondarySectionProps) {
   return (

@@ -34,7 +34,7 @@ const ExpandIcon = chakra(FaAngleDown, {
   },
 });
 
-interface TaskPrimarySectionProps extends Omit<Task, 'description'> {
+interface TaskPrimarySectionProps extends Omit<Task, '_id' | 'description'> {
   expandable: boolean;
   isExpanded: boolean;
   toggleExpanded: () => void;
