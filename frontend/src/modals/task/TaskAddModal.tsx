@@ -42,7 +42,7 @@ export default function TaskAddModal({ onClose }: TaskAddModalProps) {
       try {
         await createTask({
           content: values.name,
-          description: values.description,
+          description: values.description.length ? values.description : undefined,
         });
         setModalState({ successful: true });
       } catch (e: any) {
