@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   chakra,
   Box,
@@ -8,10 +8,13 @@ import {
 } from '@chakra-ui/react';
 import {
   FaAngleDown,
+  FaTrash,
 } from 'react-icons/fa';
 
 import { getTaskColorClassName } from './utils';
 import Task, { TaskStatus } from '../../../../types/Task';
+
+import useTasks from '../../../../hooks/useTasks';
 
 const getTaskStatusDescription = (taskStatus: TaskStatus) => {
   if (taskStatus === 'IN_PROGRESS') {
@@ -20,21 +23,19 @@ const getTaskStatusDescription = (taskStatus: TaskStatus) => {
   return taskStatus.toUpperCase();
 }
 
-const ExpandButton = chakra('button', {
+const Button = chakra('button', {
   baseStyle: {
     display: 'block',
-    w: '32px',
-  }
-})
+  },
+});
 
-const ExpandIcon = chakra(FaAngleDown, {
+const IconWrapper = chakra('span', {
   baseStyle: {
-    fontSize: '3xl',
     color: 'text',
   },
 });
 
-interface TaskPrimarySectionProps extends Omit<Task, '_id' | 'description'> {
+interface TaskPrimarySectionProps extends Omit<Task, 'description'> {
   expandable: boolean;
   isExpanded: boolean;
   toggleExpanded: () => void;
@@ -42,12 +43,18 @@ interface TaskPrimarySectionProps extends Omit<Task, '_id' | 'description'> {
 
 export default function TaskPrimarySection(props: TaskPrimarySectionProps) {
   const {
+    _id,
     content,
     status,
     expandable,
     isExpanded,
     toggleExpanded,
   } = props;
+  const { deleteTask } = useTasks();
+
+  const onDeleteClick = useCallback(async () => {
+    await deleteTask({ _id });
+  }, [deleteTask, _id]);
 
   return (
     <Flex>
@@ -60,13 +67,22 @@ export default function TaskPrimarySection(props: TaskPrimarySectionProps) {
         </Text>
       </Box>
       <Spacer />
-      {expandable && (
-        <ExpandButton onClick={toggleExpanded}>
-          <Text transition="ease-in-out 0.2s" transform={isExpanded ? 'rotate(-180deg)' : ''}>
-            <ExpandIcon />
-          </Text>
-        </ExpandButton>
-      )}
+      <Flex align="center">
+        <Button onClick={onDeleteClick}>
+          <IconWrapper fontSize={["lg", "xl"]} opacity="0.75" transition="ease-in-out 0.2s" sx={{ '&:hover': { opacity: '1', color: 'red.500' }}}>
+            <FaTrash />
+          </IconWrapper>
+        </Button>
+        {expandable && (
+          <Button ml={4} onClick={toggleExpanded}>
+            <Text as="span" transition="ease-in-out 0.2s" transform={isExpanded ? 'rotate(-180deg)' : ''}>
+              <IconWrapper w={32} fontSize="3xl">
+                <FaAngleDown />
+              </IconWrapper>
+            </Text>
+          </Button>
+        )}
+      </Flex>
     </Flex>
   );
 }

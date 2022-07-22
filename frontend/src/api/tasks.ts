@@ -2,16 +2,19 @@ import axios from 'axios';
 
 import Task from '../types/Task';
 
+const createRequestHeaders = (token: string) => ({
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 interface GetTasksResponse {
   tasks: Task[];
 }
 
 export async function getTasks(token: string) {
-  const response = await axios.get<GetTasksResponse>('/api/tasks', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const headers = createRequestHeaders(token);
+  const response = await axios.get<GetTasksResponse>('/api/tasks', headers);
   return response.data;
 }
 
@@ -22,11 +25,8 @@ interface CreateTaskResponse {
 }
 
 export async function createTask(createTaskProps: CreateTaskRequestProps, token: string) {
-  const response = await axios.post<CreateTaskResponse>('/api/tasks', createTaskProps, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const headers = createRequestHeaders(token);
+  const response = await axios.post<CreateTaskResponse>('/api/tasks', createTaskProps, headers);
   return response.data;
 }
 
@@ -55,10 +55,14 @@ export async function updateTask(updateTaskProps: UpdateTaskRequestProps, token:
     data.status = status;
   }
 
-  const response = await axios.put<UpdateTaskResponse>(`/api/tasks/${_id}`, data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const headers = createRequestHeaders(token);
+  const response = await axios.put<UpdateTaskResponse>(`/api/tasks/${_id}`, data, headers);
   return response.data;
+}
+
+type DeleteTaskRequestProps = Pick<Task, '_id'>;
+
+export async function deleteTask({ _id }: DeleteTaskRequestProps, token: string) {
+  const headers = createRequestHeaders(token);
+  await axios.delete(`/api/tasks/${_id}`, headers);
 }

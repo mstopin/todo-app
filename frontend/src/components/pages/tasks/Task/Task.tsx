@@ -27,6 +27,7 @@ export default function Task({ _id, content, description, status }: TaskProps) {
   return (
     <TaskBase boxShadow={getTaskColorClassName(status)}>
       <TaskPrimarySection
+        _id={_id}
         content={content}
         status={status}
         expandable={!mustBeExpanded}

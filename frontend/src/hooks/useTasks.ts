@@ -9,11 +9,14 @@ import {
   getTasks,
   createTask,
   updateTask,
+  deleteTask,
 } from '../api/tasks';
 
 type CreateTaskProps = Omit<Task, '_id' | 'status'>;
 
 type UpdateTaskProps = Partial<Task> & Pick<Task, '_id'>;
+
+type DeleteTaskProps = Pick<Task, '_id'>;
 
 export default function useTasks() {
   const { token } = useUser();
@@ -29,8 +32,8 @@ export default function useTasks() {
 
     const newTask = (await createTask(createTaskProps, token)).task;
     const oldTasks = tasks.data ?? [];
-    const mutatedTasks = [...oldTasks, newTask];
-    tasks.mutate(mutatedTasks, { revalidate: true });
+    const updatedTasks = [...oldTasks, newTask];
+    tasks.mutate(updatedTasks, { revalidate: false });
   }, [token, tasks]);
 
   const updateTaskAndMutateState = useCallback(async (updateTaskProps: UpdateTaskProps) =>{
@@ -47,13 +50,26 @@ export default function useTasks() {
       }
       return task;
     });
-    tasks.mutate(updatedTasks, { revalidate: true });
+    tasks.mutate(updatedTasks, { revalidate: false });
+  }, [token, tasks]);
+
+  const deleteTaskAndMutateState = useCallback(async (deleteTaskProps: DeleteTaskProps) => {
+    if (!token || !tasks || !tasks.data) {
+      return;
+    }
+
+    await deleteTask(deleteTaskProps, token);
+
+    const oldTasks = [...tasks.data];
+    const updatedTasks = oldTasks.filter((task) => task._id !== deleteTaskProps._id);
+    tasks.mutate(updatedTasks, { revalidate: false });
   }, [token, tasks]);
 
   return {
     tasks: tasks ? tasks.data : [],
     createTask: createTaskAndMutateState,
     updateTask: updateTaskAndMutateState,
+    deleteTask: deleteTaskAndMutateState,
     isError: !!tasks.error,
-  }
+  };
 }
