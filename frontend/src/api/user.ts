@@ -11,9 +11,8 @@ export async function loginUser({ email, password }: LoginUserProps) {
       email,
       password,
     });
-    return result;
+    return result.data;
   } catch (e: any) {
-    console.log(e.response);
     if (e.response.status === 400) {
       throw new Error(e.response.data.error);
     }

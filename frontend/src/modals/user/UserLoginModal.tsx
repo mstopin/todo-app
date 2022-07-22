@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 
 import BaseModal, { BaseModalHeader, BaseModalBody, BaseModalFooter } from '../BaseModal';
 
-import { loginUser } from '../../api/user';
+import useUser from '../../hooks/useUser';
 
 interface UserLoginModalProps {
   onClose: () => void;
@@ -25,7 +25,10 @@ interface LoginState {
 }
 
 export default function UserLoginModal({ onClose }: UserLoginModalProps) {
+  const user = useUser();
+
   const [loginState, setLoginState] = useState<LoginState | null>(null);
+
   const form = useFormik({
     initialValues: {
       email: '',
@@ -40,11 +43,7 @@ export default function UserLoginModal({ onClose }: UserLoginModalProps) {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const result = await loginUser({
-          email: values.email,
-          password: values.password,
-        });
-        localStorage.setItem('token', result.data.token);
+        await user.logIn(values.email, values.password);
         setLoginState({ successful: true });
       } catch (e: any) {
         setLoginState({ error: e.message });

@@ -49,7 +49,7 @@ export default function UserRegisterModal({ onClose }: UserRegisterModalProps) {
     },
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const result = await registerUser({
+        await registerUser({
           email: values.email,
           password: values.password,
         });

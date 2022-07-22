@@ -13,7 +13,10 @@ import {
 
 import ModalContext, { Modal } from '../../../modals/ModalContext';
 
+import useUser from '../../../hooks/useUser';
+
 export default function HeaderUserMenu() {
+  const user = useUser();
   const { showModal } = useContext(ModalContext);
 
   return (
@@ -23,16 +26,27 @@ export default function HeaderUserMenu() {
           <FaUser />
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={() => showModal(Modal.USER_LOGIN)}>
-            <Text color="text">
-              Login
-            </Text>
-          </MenuItem>
-          <MenuItem onClick={() => showModal(Modal.USER_REGISTER)}>
-            <Text color="text">
-              Register
-            </Text>
-          </MenuItem>
+          {user.token && (
+            <MenuItem onClick={user.logOut}>
+              <Text color="text">
+                Log out
+              </Text>
+            </MenuItem>
+          )}
+          {!user.token && (
+            <>
+              <MenuItem onClick={() => showModal(Modal.USER_LOGIN)}>
+                <Text color="text">
+                  Login
+                </Text>
+              </MenuItem>
+              <MenuItem onClick={() => showModal(Modal.USER_REGISTER)}>
+                <Text color="text">
+                  Register
+                </Text>
+              </MenuItem>
+            </>
+          )}
         </MenuList>
       </Menu>
     </Box>
