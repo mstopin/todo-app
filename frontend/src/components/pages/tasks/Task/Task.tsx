@@ -10,7 +10,7 @@ import TaskPrimarySection from './TaskPrimarySection';
 import TaskSecondarySection from './TaskSecondarySection';
 
 import { getTaskColorClassName } from './utils';
-import { Task as ITask } from './types';
+import ITask from '../../../../types/Task';
 
 type TaskProps = ITask;
 

@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 
 import { getTaskColorClassName } from './utils';
-import { Task, TaskStatus } from './types';
+import Task, { TaskStatus } from '../../../../types/Task';
 
 const getTaskStatusDescription = (taskStatus: TaskStatus) => {
   if (taskStatus === 'IN_PROGRESS') {

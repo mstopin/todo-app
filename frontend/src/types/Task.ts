@@ -1,6 +1,6 @@
 export type TaskStatus = 'NEW' | 'IN_PROGRESS' | 'COMPLETED';
 
-export interface Task {
+export default interface Task {
   content: string;
   description?: string;
   status: TaskStatus;

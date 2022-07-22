@@ -1,5 +1,5 @@
-type TaskStatusKey = 'NEW' | 'IN_PROGRESS' | 'COMPLETED';
+import { TaskStatus } from "../../../../types/Task";
 
-export const getTaskColorClassName = (taskStatuskey: TaskStatusKey) => {
-  return `task.${taskStatuskey.toLowerCase()}`;
+export const getTaskColorClassName = (taskStatus: TaskStatus) => {
+  return `task.${taskStatus.toLowerCase()}`;
 }

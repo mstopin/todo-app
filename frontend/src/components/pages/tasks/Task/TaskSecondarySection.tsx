@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 
 import { getTaskColorClassName } from './utils';
-import { Task } from './types';
+import Task from '../../../../types/Task';
 
 const StatusChangeButton = chakra('button', {
   baseStyle: {
