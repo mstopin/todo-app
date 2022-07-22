@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   chakra,
   Flex,
@@ -12,6 +12,8 @@ import {
 import TaskBase from './TaskBase';
 
 import ModalContext, { Modal } from '../../../../modals/ModalContext';
+
+import useUser from '../../../../hooks/useUser';
 
 const AddTaskButton = chakra('button', {
   baseStyle: {
@@ -30,7 +32,15 @@ const AddTaskIcon = chakra(FaPlus, {
 })
 
 export default function CreateTaskButton() {
+  const { token } = useUser();
   const { showModal } = useContext(ModalContext);
+
+  const onTaskAddClick = useMemo(() => {
+    if (!token) {
+      return () => showModal(Modal.USER_LOGIN);
+    }
+    return () => showModal(Modal.TASK_ADD);
+  }, [token, showModal]);
 
   return (
     <TaskBase>
@@ -39,7 +49,7 @@ export default function CreateTaskButton() {
           Add new task
         </Text>
         <Spacer />
-        <AddTaskButton onClick={() => showModal(Modal.TASK_ADD)}>
+        <AddTaskButton onClick={onTaskAddClick}>
           <AddTaskIcon />
         </AddTaskButton>
       </Flex>

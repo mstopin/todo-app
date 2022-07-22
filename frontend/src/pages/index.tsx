@@ -16,7 +16,7 @@ export default function Index() {
   return (
     <Box maxW="992px" mx="auto">
       <Header />
-      <Box px={3} mt={[6, 8, 16, 20]}>
+      <Box px={3} mt={[6, 8, 16, 20]} mb={[4, 6, 12, 16]}>
         <Text fontFamily="poppins" fontSize={["3xl", null, null, "4xl"]} fontWeight="medium" color="text">
           My tasks:
         </Text>
