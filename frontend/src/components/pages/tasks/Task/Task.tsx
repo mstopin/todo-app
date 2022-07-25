@@ -1,22 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Box,
   Collapse,
   useMediaQuery,
 } from '@chakra-ui/react';
+
+import TaskType, { TaskStatus } from '../../../../types/Task';
+
+import useTasks from '../../../../hooks/useTasks';
 
 import TaskBase from './TaskBase'
 import TaskPrimarySection from './TaskPrimarySection';
 import TaskSecondarySection from './TaskSecondarySection';
 
 import { getTaskColorClassName } from './utils';
-import TaskType from '../../../../types/Task';
 
-type TaskProps = TaskType;
+interface TaskProps {
+  task: TaskType;
+}
 
-export default function Task({ _id, content, description, status }: TaskProps) {
+export default function Task({ task }: TaskProps) {
   const [expanded, setExpanded] = useState(false);
   const [mustBeExpanded] = useMediaQuery('(min-width: 48em)');
+
+  const { updateTask, deleteTask } = useTasks();
+
+  const onTaskUpdate = useCallback((status: TaskStatus) => {
+    updateTask({
+      _id: task._id,
+      status
+    });
+  }, [updateTask, task._id]);
+
+  const onTaskDelete = useCallback(() => {
+    deleteTask({
+      _id: task._id
+    });
+  }, [deleteTask, task._id]);
 
   useEffect(() => {
     if (!mustBeExpanded) {
@@ -25,20 +44,22 @@ export default function Task({ _id, content, description, status }: TaskProps) {
   }, [mustBeExpanded]);
 
   return (
-    <TaskBase boxShadow={getTaskColorClassName(status)}>
+    <TaskBase boxShadow={getTaskColorClassName(task.status)}>
       <TaskPrimarySection
-        _id={_id}
-        content={content}
-        status={status}
+        task={{
+          ...task,
+          onDelete: onTaskDelete,
+        }}
         expandable={!mustBeExpanded}
         isExpanded={expanded}
         toggleExpanded={() => setExpanded(!expanded)}
       />
       <Collapse in={mustBeExpanded || expanded}>
         <TaskSecondarySection
-          _id={_id}
-          description={description}
-          status={status}
+          task={{
+            ...task,
+            onUpdate: onTaskUpdate,
+          }}
         />
       </Collapse>
     </TaskBase>

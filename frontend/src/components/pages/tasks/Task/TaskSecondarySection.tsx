@@ -6,10 +6,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { getTaskColorClassName } from './utils';
-import Task from '../../../../types/Task';
+import Task, { TaskStatus } from '../../../../types/Task';
 
-import useTasks from '../../../../hooks/useTasks';
+import { getTaskColorClassName } from './utils';
 
 const StatusChangeButton = chakra('button', {
   baseStyle: {
@@ -38,10 +37,18 @@ const StatusText = chakra(Text, {
   },
 });
 
-type TaskSecondarySectionProps = Omit<Task, 'content'>;
+interface TaskSecondarySectionProps {
+  task: Omit<Task, 'id' | 'content'> & {
+    onUpdate: (status: TaskStatus) => void;
+  };
+}
 
-export default function TaskSecondarySection({ _id, description, status }: TaskSecondarySectionProps) {
-  const { updateTask } = useTasks();
+export default function TaskSecondarySection({ task }: TaskSecondarySectionProps) {
+  const {
+    description,
+    status,
+    onUpdate,
+  } = task;
 
   return (
     <Box>
@@ -57,7 +64,7 @@ export default function TaskSecondarySection({ _id, description, status }: TaskS
         <StatusChangeButton
           borderColor={getTaskColorClassName('NEW')}
           disabled={status === 'NEW'}
-          onClick={() => updateTask({ _id, status: 'NEW' })}
+          onClick={() => onUpdate('NEW')}
         >
           <StatusText>
             New
@@ -66,7 +73,7 @@ export default function TaskSecondarySection({ _id, description, status }: TaskS
         <StatusChangeButton
           borderColor={getTaskColorClassName('IN_PROGRESS')}
           disabled={status === 'IN_PROGRESS'}
-          onClick={() => updateTask({ _id, status: 'IN_PROGRESS' })}
+          onClick={() => onUpdate('IN_PROGRESS')}
         >
           <StatusText>
             In progress
@@ -75,7 +82,7 @@ export default function TaskSecondarySection({ _id, description, status }: TaskS
         <StatusChangeButton
           borderColor={getTaskColorClassName('COMPLETED')}
           disabled={status === 'COMPLETED'}
-          onClick={() => updateTask({ _id, status: 'COMPLETED' })}
+          onClick={() => onUpdate('COMPLETED')}
         >
           <StatusText>
             Completed

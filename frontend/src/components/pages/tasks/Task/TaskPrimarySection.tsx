@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   chakra,
   Box,
@@ -11,17 +11,9 @@ import {
   FaTrash,
 } from 'react-icons/fa';
 
-import { getTaskColorClassName } from './utils';
-import Task, { TaskStatus } from '../../../../types/Task';
+import Task from '../../../../types/Task';
 
-import useTasks from '../../../../hooks/useTasks';
-
-const getTaskStatusDescription = (taskStatus: TaskStatus) => {
-  if (taskStatus === 'IN_PROGRESS') {
-    return 'IN PROGRESS';
-  }
-  return taskStatus.toUpperCase();
-}
+import { getTaskColorClassName, getTaskStatusDescription } from './utils';
 
 const Button = chakra('button', {
   baseStyle: {
@@ -35,26 +27,27 @@ const IconWrapper = chakra('span', {
   },
 });
 
-interface TaskPrimarySectionProps extends Omit<Task, 'description'> {
+interface TaskPrimarySectionProps {
+  task: Omit<Task, 'id' | 'description'> & {
+    onDelete: () => void;
+  },
   expandable: boolean;
   isExpanded: boolean;
   toggleExpanded: () => void;
 }
 
-export default function TaskPrimarySection(props: TaskPrimarySectionProps) {
+export default function TaskPrimarySection({ task, ...props }: TaskPrimarySectionProps) {
   const {
-    _id,
     content,
     status,
+    onDelete,
+  } = task;
+
+  const {
     expandable,
     isExpanded,
     toggleExpanded,
   } = props;
-  const { deleteTask } = useTasks();
-
-  const onDeleteClick = useCallback(async () => {
-    await deleteTask({ _id });
-  }, [deleteTask, _id]);
 
   return (
     <Flex>
@@ -68,7 +61,7 @@ export default function TaskPrimarySection(props: TaskPrimarySectionProps) {
       </Box>
       <Spacer />
       <Flex align="center">
-        <Button onClick={onDeleteClick}>
+        <Button onClick={onDelete}>
           <IconWrapper fontSize={["lg", "xl"]} opacity="0.75" transition="ease-in-out 0.2s" sx={{ '&:hover': { opacity: '1', color: 'red.500' }}}>
             <FaTrash />
           </IconWrapper>

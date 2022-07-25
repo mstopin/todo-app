@@ -9,10 +9,10 @@ import {
   FaPlus,
 } from 'react-icons/fa';
 
-import TaskBase from './TaskBase';
-
 import useUser from '../../../../hooks/useUser';
 import useModals, { Modal } from '../../../../hooks/useModals';
+
+import TaskBase from './TaskBase';
 
 const AddTaskButton = chakra('button', {
   baseStyle: {
