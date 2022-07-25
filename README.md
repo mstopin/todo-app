@@ -2,9 +2,8 @@ ToDo App
 ===
 
 Simple ToDo application powered by React, Fastify and MongoDB.
-![Demo][./docs/demo.jpg]
+![Demo](docs/demo.png)
 
----
 ## Features
 - Tracks tasks and their status
 - Responsive design
@@ -13,7 +12,6 @@ Simple ToDo application powered by React, Fastify and MongoDB.
 - Built with: React, Fastify, TypeScript and MongoDB
 - Dockerized
 
----
 ## Usage
 To run this application, you will need:
 - NodeJS with yarn or npm
@@ -40,6 +38,6 @@ $ docker-compose -f docker-compose.dev.yaml up
 # Run the app [production]
 $ docker-compose -f docker-compose.prod.yaml up
 ```
----
+
 ## License
 MIT
