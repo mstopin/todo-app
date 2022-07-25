@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Box,
   Text,
@@ -11,36 +11,43 @@ import {
   FaUser,
 } from 'react-icons/fa';
 
-import ModalContext, { Modal } from '../../../modals/ModalContext';
+interface HeaderUserMenu {
+  isLoggedIn: boolean;
+  onLogIn: () => void;
+  onLogOut: () => void;
+  onRegister: () => void;
+}
 
-import useUser from '../../../hooks/useUser';
-
-export default function HeaderUserMenu() {
-  const user = useUser();
-  const { showModal } = useContext(ModalContext);
+export default function HeaderUserMenu(props: HeaderUserMenu) {
+  const {
+    isLoggedIn,
+    onLogIn,
+    onLogOut,
+    onRegister,
+  } = props;
 
   return (
     <Box>
       <Menu autoSelect={false}>
-        <MenuButton display="block" fontSize={["2xl", null, "3xl"]} color="text">
+        <MenuButton aria-label="User options" display="block" fontSize={["2xl", null, "3xl"]} color="text">
           <FaUser />
         </MenuButton>
         <MenuList>
-          {user.token && (
-            <MenuItem onClick={user.logOut}>
+          {isLoggedIn && (
+            <MenuItem onClick={onLogOut}>
               <Text color="text">
                 Log out
               </Text>
             </MenuItem>
           )}
-          {!user.token && (
+          {!isLoggedIn && (
             <>
-              <MenuItem onClick={() => showModal(Modal.USER_LOGIN)}>
+              <MenuItem onClick={onLogIn}>
                 <Text color="text">
-                  Login
+                  Log in
                 </Text>
               </MenuItem>
-              <MenuItem onClick={() => showModal(Modal.USER_REGISTER)}>
+              <MenuItem onClick={onRegister}>
                 <Text color="text">
                   Register
                 </Text>
