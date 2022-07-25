@@ -48,7 +48,7 @@ export default function CreateTaskButton() {
           Add new task
         </Text>
         <Spacer />
-        <AddTaskButton onClick={onTaskAddClick}>
+        <AddTaskButton aria-label="Add task" onClick={onTaskAddClick}>
           <AddTaskIcon />
         </AddTaskButton>
       </Flex>

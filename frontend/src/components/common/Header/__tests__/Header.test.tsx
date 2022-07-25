@@ -13,16 +13,16 @@ const logIn = jest.fn();
 const logOut = jest.fn();
 
 const renderHeader = () => {
-  const mockModalContextProviderValue = {
-    modal,
-    showModal: jest.fn((newModal: Modal) => modal = newModal),
-    hideModal: jest.fn(() => modal = null),
-  };
-
   const mockUserContextProviderValue = {
     token,
     logIn,
     logOut,
+  };
+  
+  const mockModalContextProviderValue = {
+    modal,
+    showModal: jest.fn((newModal: Modal) => modal = newModal),
+    hideModal: jest.fn(() => modal = null),
   };
 
   return render(

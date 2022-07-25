@@ -61,13 +61,13 @@ export default function TaskPrimarySection({ task, ...props }: TaskPrimarySectio
       </Box>
       <Spacer />
       <Flex align="center">
-        <Button onClick={onDelete}>
+        <Button aria-label="Delete task" onClick={onDelete}>
           <IconWrapper fontSize={["lg", "xl"]} opacity="0.75" transition="ease-in-out 0.2s" sx={{ '&:hover': { opacity: '1', color: 'red.500' }}}>
             <FaTrash />
           </IconWrapper>
         </Button>
         {expandable && (
-          <Button ml={4} onClick={toggleExpanded}>
+          <Button aria-label="Expand" ml={4} onClick={toggleExpanded}>
             <Text as="span" transition="ease-in-out 0.2s" transform={isExpanded ? 'rotate(-180deg)' : ''}>
               <IconWrapper w={32} fontSize="3xl">
                 <FaAngleDown />

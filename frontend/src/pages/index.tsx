@@ -24,10 +24,7 @@ export default function Index() {
           <SimpleGrid columns={[1, null, 2]} spacing={4}>
             {tasks && tasks.map((task) => (
               <Task
-                _id={task._id}
-                content={task.content}
-                description={task.description}
-                status={task.status}
+                task={task}
                 key={task._id}
               />
             ))}
