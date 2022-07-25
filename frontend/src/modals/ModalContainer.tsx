@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 
-import ModalContext, { Modal } from './ModalContext';
+import useModals, { Modal } from '../hooks/useModals';
 
 import UserLoginModal from './user/UserLoginModal';
 import UserRegisterModal from './user/UserRegisterModal';
-
 import TaskAddModal from './task/TaskAddModal';
 
 export default function ModalContainer() {
-  const { modal, hideModal } = useContext(ModalContext);
+  const { modal, hideModal } = useModals();
 
   switch(modal) {
     case Modal.USER_LOGIN:

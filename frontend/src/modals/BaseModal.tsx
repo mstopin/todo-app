@@ -1,10 +1,9 @@
-import React, { useContext, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
   ModalBody,
   ModalFooter,
 } from '@chakra-ui/react';

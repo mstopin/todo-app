@@ -17,7 +17,7 @@ interface UserContextProps {
   logOut: () => Promise<void>;
 }
 
-const UserContext = createContext<UserContextProps>({
+export const UserContext = createContext<UserContextProps>({
   token: null,
   logIn: async () => undefined,
   logOut: async () => undefined,
@@ -51,6 +51,5 @@ export function UserContextProvider({ children }: PropsWithChildren) {
 }
 
 export default function useUser() {
-  const user = useContext(UserContext);
-  return user;
+  return useContext(UserContext);
 }
