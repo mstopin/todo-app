@@ -1,21 +1,58 @@
-ToDo App
-===
+# TODO App
 
-Simple ToDo application powered by React, Fastify and MongoDB.
-![Demo](docs/demo.png)
+Simple TODO application powered by React, Fastify and MongoDB.  
+Create account and manage your tasks on any device.
 
-## Features
-- Tracks tasks and their status
+# Features
+
+- Sign-Up / Log-In
+- Manage your tasks on any device
 - Responsive design
-- Supports multiple users with JWT authentication
-- Unit / Integration tests for frontend components
-- Built with: React, Fastify, TypeScript and MongoDB
-- Dockerized
+- Unit-tested frontend
+- Uses Nginx as a reverse-proxy
+- Dockerized and ready to deploy using docker-compose
 
-## Usage
+# Stack
+
+### Frontend
+
+- TypeScript
+- React
+- NextJS
+- SWR
+- Chakra-UI
+
+### Backend
+
+- TypeScript
+- Fastify
+- JWT
+- MongoDB
+
+# Demo
+
+## Sign-up
+
+![Sign up](./docs/sign-up.jpg)
+
+## Sign-up with validation errors
+
+![Sign up with errors](./docs/sign-up-error.jpg)
+
+## Add task
+
+![Add task](./docs/add-task.jpg)
+
+## Tasks
+
+![Tasks](./docs/tasks.jpg)
+
+# Usage
+
 To run this application, you will need:
+
 - NodeJS with yarn or npm
-- Docker with docker-compose 
+- Docker with docker-compose
 
 ```bash
 # Clone this repository
@@ -40,4 +77,5 @@ $ docker-compose -f docker-compose.prod.yaml up
 ```
 
 ## License
+
 MIT
